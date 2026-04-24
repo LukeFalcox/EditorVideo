@@ -1,5 +1,6 @@
 from moviepy.editor import VideoFileClip
 import os
+from utils.logger import log_error
 
 
 class VideoLoaderError(Exception):
@@ -7,25 +8,21 @@ class VideoLoaderError(Exception):
 
 
 def load_video(file_path: str) -> VideoFileClip:
-    """
-    Load a video file and return a VideoFileClip instance.
 
-    :param file_path: Path to the video file
-    :return: VideoFileClip object
-    :raises VideoLoaderError: if file is invalid or cannot be loaded
-    """
-
-    # 1. Validate path
     if not file_path:
+        log_error("Empty file path provided")
         raise VideoLoaderError("File path cannot be empty")
 
-    # 2. Check if file exists
     if not os.path.exists(file_path):
+        log_error(f"File not found: {file_path}")
         raise VideoLoaderError(f"File not found: {file_path}")
 
-    # 3. Try loading video
+    if not file_path.endswith((".mp4", ".mov", ".avi")):
+        log_error(f"Invalid format: {file_path}")
+        raise VideoLoaderError("Unsupported file format")
+
     try:
-        video = VideoFileClip(file_path)
-        return video
+        return VideoFileClip(file_path)
     except Exception as e:
-        raise VideoLoaderError(f"Failed to load video: {str(e)}")
+        log_error(f"Failed to load video: {str(e)}")
+        raise VideoLoaderError(str(e))

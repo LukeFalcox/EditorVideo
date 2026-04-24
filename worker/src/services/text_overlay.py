@@ -1,4 +1,5 @@
 from moviepy.editor import TextClip, CompositeVideoClip
+from utils.logger import log_error
 
 
 class TextOverlayError(Exception):
@@ -6,15 +7,9 @@ class TextOverlayError(Exception):
 
 
 def add_text_overlay(video, text: str):
-    """
-    Adds a centered text overlay to a video.
-
-    :param video: VideoFileClip
-    :param text: Text to display
-    :return: CompositeVideoClip
-    """
 
     if not text:
+        log_error("Empty text provided")
         raise TextOverlayError("Text cannot be empty")
 
     try:
@@ -23,15 +18,15 @@ def add_text_overlay(video, text: str):
                 text,
                 fontsize=50,
                 color="white",
-                method="caption",  # melhor compatibilidade
+                method="caption",
                 size=video.size
             )
             .set_position("center")
             .set_duration(video.duration)
         )
 
-        final_video = CompositeVideoClip([video, txt_clip])
-        return final_video
+        return CompositeVideoClip([video, txt_clip])
 
     except Exception as e:
-        raise TextOverlayError(f"Failed to add text overlay: {str(e)}")
+        log_error(f"Text overlay failed: {str(e)}")
+        raise TextOverlayError(str(e))

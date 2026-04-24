@@ -1,0 +1,10 @@
+2026-04-24 10:56:17,277 - ERROR - Text overlay failed: MoviePy Error: creation of None failed because of the following error:
+
+[WinError 2] O sistema não conseguiu localizar o ficheiro especificado.
+
+.This error can be due to the fact that ImageMagick is not installed on your computer, or (for Windows users) that you didn't specify the path to the ImageMagick binary in file conf.py, or that the path you specified is incorrect
+2026-04-24 10:56:17,278 - ERROR - Pipeline failed: MoviePy Error: creation of None failed because of the following error:
+
+[WinError 2] O sistema não conseguiu localizar o ficheiro especificado.
+
+.This error can be due to the fact that ImageMagick is not installed on your computer, or (for Windows users) that you didn't specify the path to the ImageMagick binary in file conf.py, or that the path you specified is incorrect
